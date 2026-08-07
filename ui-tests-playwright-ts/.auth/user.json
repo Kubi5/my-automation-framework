@@ -1,0 +1,14 @@
+{
+  "cookies": [],
+  "origins": [
+    {
+      "origin": "https://demo.realworld.show",
+      "localStorage": [
+        {
+          "name": "jwtToken",
+          "value": "token_117d87fd952aa031468d961308f15a42"
+        }
+      ]
+    }
+  ]
+}
