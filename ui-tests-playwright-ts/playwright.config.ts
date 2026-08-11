@@ -29,7 +29,8 @@ export default defineConfig({
     // baseURL: 'http://localhost:3000',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    // trace: 'on-first-retry',
+    trace: 'on'
   },
 
   /* Configure projects for major browsers */
@@ -39,12 +40,20 @@ export default defineConfig({
       testMatch: /.*\.setup\.ts/
     },
     {
-      name: 'chromium',
+      name: 'guest-tests',
+      testDir: './tests/guest',
       use: { ...devices['Desktop Chrome'],
+      },
+    },
+    {
+      name: 'logged-in-tests',
+      testDir: './tests/logged-in',
+      use: { 
+      ...devices['Desktop Chrome'],
       storageState: '.auth/user.json',
       },
-      dependencies: ['setup']
-    },
+      dependencies: ['setup'],
+    }
   ],
 
   /* Run your local dev server before starting the tests */
