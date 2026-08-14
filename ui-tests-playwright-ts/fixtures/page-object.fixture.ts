@@ -1,15 +1,10 @@
-import { test as base , expect } from '@playwright/test';
+import { test as base } from '@playwright/test';
+import { AccountUtils, UserCredentials } from '../utils/AccountUtils'
 import { AddArticlePage } from '../pages/AddArticlePage';
 import { MainLoggedInPage } from '../pages/MainLoggedInPage';
 import { NavbarComponent } from '../pages/NavbarComponent';
 import { RegisterPage } from '../pages/RegisterPage';
 import { LoginPage } from '../pages/LoginPage';
-
-type UserCredentials = {
-    username: string;
-    userEmail: string;
-    userPassword: string;
-}
 
 type MyFixtures = {
     addArticlePage: AddArticlePage;
@@ -51,23 +46,8 @@ export const test = base.extend<MyFixtures>({
     },
 
     registeredUser: async ({ request }, use) => {
-        const randomId = Date.now();
-        const userEmail = `testuser_${randomId}@example.com`;
-        const username = `testuser_${randomId}`;
-        const userPassword = `${randomId}`;
-        
-        const response = await request.post('https://api.realworld.show/api/users', {
-            data: {
-                user: { 
-                    username: username,
-                    email: userEmail,
-                    password: userPassword
-                }
-            }
-        });
-
-        expect(response.status()).toBe(201);
-        await use({ username, userEmail, userPassword});
+        const userCredentials = await AccountUtils.apiRegisterUser(request);
+        await use(userCredentials);
     },
 
 })

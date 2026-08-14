@@ -1,4 +1,6 @@
 import { Page, Locator } from '@playwright/test';
+import { ArticleData } from '../utils/ArticleUtils';
+
 
 export class AddArticlePage {
     readonly page: Page;
@@ -17,11 +19,11 @@ export class AddArticlePage {
         this.publishArticleButton = page.locator('button[type="button"]');
     }
 
-    async addArticle(title: string, description: string, articleText: string, tags: string){
-        await this.articleTitleInput.fill(title);
-        await this.articleDescriptionInput.fill(description);
-        await this.articleTextInput.fill(articleText);
-        await this.articleTagsInput.fill(tags);
+    async addArticle(articleData: ArticleData){
+        await this.articleTitleInput.fill(articleData.title);
+        await this.articleDescriptionInput.fill(articleData.description);
+        await this.articleTextInput.fill(articleData.body);
+        await this.articleTagsInput.fill(articleData.tags);
         await this.publishArticleButton.click();
     }
 }

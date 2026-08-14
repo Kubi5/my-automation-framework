@@ -1,4 +1,5 @@
 import { Page, Locator } from '@playwright/test';
+import { UserCredentials } from '../utils/AccountUtils';
 
 export class RegisterPage {
   readonly page: Page;
@@ -19,10 +20,10 @@ export class RegisterPage {
     await this.page.goto('https://demo.realworld.show/register');
   }
 
-  async register(username: string, email: string, password: string){
-        await this.usernameInput.fill(username);
-        await this.emailInput.fill(email);
-        await this.passwordInput.fill(password);
+  async register(userCredentials: UserCredentials){
+        await this.usernameInput.fill(userCredentials.username);
+        await this.emailInput.fill(userCredentials.userEmail);
+        await this.passwordInput.fill(userCredentials.userPassword);
         await this.confirmButton.click();
   }
 
