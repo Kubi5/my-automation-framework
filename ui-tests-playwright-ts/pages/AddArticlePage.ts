@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 import { ArticleData } from '../utils/ArticleUtils';
 
 
@@ -11,7 +11,7 @@ export class AddArticlePage {
     readonly publishArticleButton: Locator;
 
     constructor(page: Page){
-        this.page = page,
+        this.page = page;
         this.articleTitleInput = page.locator('input[formcontrolname="title"]');
         this.articleDescriptionInput = page.locator('input[formcontrolname="description"]')
         this.articleTextInput = page.locator('textarea[formcontrolname="body"]');
@@ -25,5 +25,10 @@ export class AddArticlePage {
         await this.articleTextInput.fill(articleData.body);
         await this.articleTagsInput.fill(articleData.tags);
         await this.publishArticleButton.click();
+    }
+
+    async goto() {
+        await this.page.goto('https://demo.realworld.show/editor');
+        await expect(this.articleTitleInput).toBeVisible();
     }
 }

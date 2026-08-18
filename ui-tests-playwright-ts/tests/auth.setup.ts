@@ -17,10 +17,15 @@ setup('register and save session', async ({ request, page }) => {
   expect(response.status()).toBe(201);
 
   const body = await response.json();
+
   await page.goto('https://demo.realworld.show/');
+
   await page.evaluate((token) => {
     localStorage.setItem('jwtToken', token);
   }, body.user.token);
+
+  await page.reload();
+  await page.waitForLoadState('networkidle');
 
   await page.context().storageState({ path: authFile });
 });

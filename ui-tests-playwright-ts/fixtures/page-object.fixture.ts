@@ -1,14 +1,14 @@
 import { test as base } from '@playwright/test';
 import { AccountUtils, UserCredentials } from '../utils/AccountUtils'
 import { AddArticlePage } from '../pages/AddArticlePage';
-import { MainLoggedInPage } from '../pages/MainLoggedInPage';
+import { MainView } from '../pages/MainView';
 import { NavbarComponent } from '../pages/NavbarComponent';
 import { RegisterPage } from '../pages/RegisterPage';
 import { LoginPage } from '../pages/LoginPage';
 
 type MyFixtures = {
     addArticlePage: AddArticlePage;
-    mainLoggedInPage: MainLoggedInPage;
+    mainView: MainView;
     navbarComponent: NavbarComponent;
     registerPage: RegisterPage;
     loginPage: LoginPage;
@@ -17,15 +17,15 @@ type MyFixtures = {
 
 export const test = base.extend<MyFixtures>({
    
-    addArticlePage: async ({page}, use) => {
+    addArticlePage: async ({ page }, use) => {
         const addArticlePage = new AddArticlePage(page);
+        await addArticlePage.goto();
         await use(addArticlePage);
     },
 
-    mainLoggedInPage: async ({ page }, use) => {
-        const mainLoggedInPage = new MainLoggedInPage(page);
-        await mainLoggedInPage.goto();
-        await use(mainLoggedInPage);
+    mainView: async ({ page }, use) => {
+        const mainView = new MainView(page);
+        await use(mainView);
     },
 
     navbarComponent: async ({ page }, use) => {
