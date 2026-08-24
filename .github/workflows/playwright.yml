@@ -49,6 +49,7 @@ jobs:
         with:
           allure_results: ui-tests-playwright-ts/allure-results
           allure_history: allure-history
+          gh_pages: allure-history
           keep_reports: 20
 
       - name: Deploy Report to GitHub Pages
