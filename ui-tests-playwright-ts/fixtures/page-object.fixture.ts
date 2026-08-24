@@ -1,10 +1,13 @@
 import { test as base } from '@playwright/test';
-import { AccountUtils, UserCredentials } from '../utils/AccountUtils'
+import { apiRegisterUser } from '../api/AccountApi'
+import { UserCredentials } from '../utils/AccountUtils';
 import { AddArticlePage } from '../pages/AddArticlePage';
 import { MainView } from '../pages/MainView';
 import { NavbarComponent } from '../pages/NavbarComponent';
 import { RegisterPage } from '../pages/RegisterPage';
 import { LoginPage } from '../pages/LoginPage';
+import { ArticleDetailsPage } from '../pages/ArticleDetailsPage';
+import { createArticle } from '../api/ArticleApi';
 
 type MyFixtures = {
     addArticlePage: AddArticlePage;
@@ -13,6 +16,7 @@ type MyFixtures = {
     registerPage: RegisterPage;
     loginPage: LoginPage;
     registeredUser: UserCredentials;
+    articleDetailsPage: ArticleDetailsPage;
 }
 
 export const test = base.extend<MyFixtures>({
@@ -46,9 +50,16 @@ export const test = base.extend<MyFixtures>({
     },
 
     registeredUser: async ({ request }, use) => {
-        const userCredentials = await AccountUtils.apiRegisterUser(request);
+        const userCredentials = await apiRegisterUser(request);
         await use(userCredentials);
     },
+
+    articleDetailsPage: async ({ page, request }, use) => {
+        const articleDetailsPage = new ArticleDetailsPage(page);
+        const slug = await createArticle(request);
+        await articleDetailsPage.goto(slug);  
+        await use(articleDetailsPage);
+    }
 
 })
 

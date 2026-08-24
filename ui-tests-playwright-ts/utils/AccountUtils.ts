@@ -1,39 +1,28 @@
-import { APIRequestContext } from '@playwright/test';
 import { faker } from '@faker-js/faker';
+import * as fs from 'fs';
+import * as path from 'path';
 
 export type UserCredentials = {
-    username: string;
-    userEmail: string;
-    userPassword: string;
+  username: string;
+  userEmail: string;
+  userPassword: string;
+};
+
+export function generateRandomUserData(overrides?: Partial<UserCredentials>): UserCredentials {
+  return {
+    username: faker.internet.username(),
+    userEmail: faker.internet.email(),
+    userPassword: faker.internet.password(),
+    ...overrides
+  };
 }
-//TODO: dodać ze logowanie i rejestracja przechodzą z poziomu main strony a nie od razu na logowaniu czy rejestracji
-export class AccountUtils {
 
-    static generateRandomUserData(): UserCredentials {
-        return {
-            username: faker.internet.username(),
-            userEmail: faker.internet.email(),
-            userPassword: faker.internet.password()
-        }
-    }  
-
-  static async apiRegisterUser(request: APIRequestContext): Promise<UserCredentials> {
-
-   const userCredentials = this.generateRandomUserData();
-    const response = await request.post('https://api.realworld.show/api/users', {
-      data: {
-        user: { 
-          username: userCredentials.username,
-          email: userCredentials.userEmail,
-          password: userCredentials.userPassword
-        }
-      }
-    });
-
-    if (!response.ok()) {
-      throw new Error(`Failed to register user: ${response.status()}`);
-    }
-
-    return userCredentials;
-  }
+export function getAuthToken(){
+  const authFilePath = path.resolve('.auth/user.json');
+  const authData = JSON.parse(fs.readFileSync(authFilePath, 'utf-8'));
+  
+  const origin = authData.origins.find((o: any) => o.origin === 'https://demo.realworld.show');
+  const jwtItem = origin?.localStorage.find((item: any) => item.name === 'jwtToken');
+  
+  return jwtItem ? jwtItem.value : '';
 }

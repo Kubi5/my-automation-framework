@@ -1,6 +1,5 @@
 import { test, expect } from '../../fixtures/page-object.fixture';
-import { MainView } from '../../pages/MainView';
-import { generateArticleData } from '../../utils/ArticleUtils';
+import { generateRandomArticleData } from '../../utils/ArticleUtils';
 
 
 test.describe('Conduit - Add article tests', () => {
@@ -13,7 +12,7 @@ test.describe('Conduit - Add article tests', () => {
   }); 
 
   test('should succesfully add article with all data', async ({ addArticlePage }) => {
-    const articleData = generateArticleData();
+    const articleData = generateRandomArticleData();
     const urlArticleText = articleData.title.toLowerCase().trim().replace(/\s+/g, '-');
 
     await addArticlePage.addArticle(articleData);

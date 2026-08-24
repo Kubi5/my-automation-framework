@@ -10,7 +10,6 @@ test.describe('Conduit - Login Tests', () => {
         await expect(loginPage.page).toHaveURL('https://demo.realworld.show/login')
   });   
 
-
   test('should login successfully with valid credentials', async ({ loginPage, registeredUser}) => {
         await loginPage.login(registeredUser.userEmail, registeredUser.userPassword);
 

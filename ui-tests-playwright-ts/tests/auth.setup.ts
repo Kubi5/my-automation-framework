@@ -17,6 +17,9 @@ setup('register and save session', async ({ request, page }) => {
   expect(response.status()).toBe(201);
 
   const body = await response.json();
+  const token = body.user.token;
+
+  process.env.AUTH_TOKEN = token;
 
   await page.goto('https://demo.realworld.show/');
 
@@ -27,5 +30,6 @@ setup('register and save session', async ({ request, page }) => {
   await page.reload();
   await page.waitForLoadState('networkidle');
 
+  await 
   await page.context().storageState({ path: authFile });
 });

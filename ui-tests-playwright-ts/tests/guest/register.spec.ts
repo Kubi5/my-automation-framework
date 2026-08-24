@@ -1,5 +1,5 @@
 import { test, expect } from '../../fixtures/page-object.fixture';
-import { AccountUtils } from '../../utils/AccountUtils';
+import { generateRandomUserData } from '../../utils/AccountUtils';
 
 
 test.describe('Conduit - Register Tests', () => {
@@ -12,7 +12,7 @@ test.describe('Conduit - Register Tests', () => {
   }); 
 
   test('should register successfully with valid credentials', async ({ registerPage }) => {
-    const randomUserCredentials = AccountUtils.generateRandomUserData(); 
+    const randomUserCredentials = generateRandomUserData(); 
 
     await registerPage.register(randomUserCredentials);
 
@@ -20,7 +20,7 @@ test.describe('Conduit - Register Tests', () => {
   }); 
 
   test('should have correct new username on the main page navbar after registration', async ({ registerPage, navbarComponent }) => {
-    const randomUserCredentials = AccountUtils.generateRandomUserData();  
+    const randomUserCredentials = generateRandomUserData();  
 
     await registerPage.register(randomUserCredentials);
 

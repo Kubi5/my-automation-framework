@@ -7,7 +7,7 @@ export interface ArticleData {
   tags: string;
 }
 
-export function generateArticleData(overrides?: Partial<ArticleData>): ArticleData {
+export function generateRandomArticleData(overrides?: Partial<ArticleData>): ArticleData {
     return {
     title: faker.lorem.words(2),
     description: faker.lorem.sentence(4),
