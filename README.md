@@ -1,5 +1,5 @@
-# 🚀 Automated Testing Framework (Java API & Playwright TS) - Conduit Site
+# 🚀 Automated Testing Framework (Playwright TS) - Conduit Site
 
-Comprehensive end-to-end and integration test automation framework built with **Java (REST Assured)** for backend testing and **TypeScript (Playwright)** for UI automation.
+Useful end-to-end test automation framework built with **TypeScript (Playwright)**.
 
 ---
