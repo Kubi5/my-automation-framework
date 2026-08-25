@@ -44,6 +44,13 @@ jobs:
           npx playwright test
         continue-on-error: true
 
+      - name: Get Allure history
+        uses: actions/checkout@v4
+        if: always()
+        with:
+          ref: gh-pages
+          path: gh-pages
+
       - name: Generate Allure Report
         uses: simple-elf/allure-report-action@master
         if: always()
@@ -51,7 +58,6 @@ jobs:
           allure_results: ui-tests-playwright-ts/allure-results
           allure_history: allure-history
           gh_pages: allure-history
-          subfolder: allure-history
           keep_reports: 20
 
       - name: Deploy Report to GitHub Pages
