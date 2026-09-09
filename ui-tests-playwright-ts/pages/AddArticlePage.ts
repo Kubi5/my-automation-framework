@@ -12,11 +12,11 @@ export class AddArticlePage {
 
     constructor(page: Page){
         this.page = page;
-        this.articleTitleInput = page.locator('input[formcontrolname="title"]');
-        this.articleDescriptionInput = page.locator('input[formcontrolname="description"]')
-        this.articleTextInput = page.locator('textarea[formcontrolname="body"]');
-        this.articleTagsInput = page.locator('input[placeholder="Enter tags"]');
-        this.publishArticleButton = page.locator('button[type="button"]');
+        this.articleTitleInput = page.getByRole('textbox', { name : "title"} );
+        this.articleDescriptionInput = page.getByRole('textbox', { name: /what's this article about/i })
+        this.articleTextInput = page.getByRole('textbox', { name : "Write your article (in markdown)"} );
+        this.articleTagsInput = page.getByPlaceholder("Enter tags");
+        this.publishArticleButton = page.getByRole('button', { name : "Publish Article"} );
     }
 
     async addArticle(articleData: ArticleData){

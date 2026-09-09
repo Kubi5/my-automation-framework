@@ -1,4 +1,5 @@
 import { test as base } from '@playwright/test';
+import { readJsonFile } from '../utils/FileUtils';
 import { apiRegisterUser } from '../api/AccountApi'
 import { UserCredentials } from '../utils/AccountUtils';
 import { AddArticlePage } from '../pages/AddArticlePage';
@@ -7,7 +8,10 @@ import { NavbarComponent } from '../pages/NavbarComponent';
 import { RegisterPage } from '../pages/RegisterPage';
 import { LoginPage } from '../pages/LoginPage';
 import { ArticleDetailsPage } from '../pages/ArticleDetailsPage';
+import { ProfilePage } from '../pages/ProfilePage';
 import { createArticle } from '../api/ArticleApi';
+import { getAuthToken } from '../utils/AccountUtils';
+import { UserSettingsPage } from '../pages/UserSettingsPage';
 
 type MyFixtures = {
     addArticlePage: AddArticlePage;
@@ -17,10 +21,13 @@ type MyFixtures = {
     loginPage: LoginPage;
     registeredUser: UserCredentials;
     articleDetailsPage: ArticleDetailsPage;
+    profilePage: ProfilePage;
+    userSettingsPage: UserSettingsPage;
+    currentUser: UserCredentials;
 }
 
 export const test = base.extend<MyFixtures>({
-   
+
     addArticlePage: async ({ page }, use) => {
         const addArticlePage = new AddArticlePage(page);
         await addArticlePage.goto();
@@ -39,7 +46,6 @@ export const test = base.extend<MyFixtures>({
 
     registerPage: async ({ page }, use) => {
         const registerPage = new RegisterPage(page);
-        await registerPage.goto();
         await use(registerPage);
     },
 
@@ -56,10 +62,27 @@ export const test = base.extend<MyFixtures>({
 
     articleDetailsPage: async ({ page, request }, use) => {
         const articleDetailsPage = new ArticleDetailsPage(page);
-        const slug = await createArticle(request);
+        const slug = await createArticle(request, getAuthToken());
         await articleDetailsPage.goto(slug);  
         await use(articleDetailsPage);
-    }
+    },
+
+    profilePage: async ({ page, currentUser }, use) => {
+        const profilePage = new ProfilePage(page);
+        await profilePage.goto(currentUser.username);
+        await use(profilePage);
+    },
+
+    userSettingsPage: async ({ page }, use) => {
+        const userSettingsPage = new UserSettingsPage(page);
+        await userSettingsPage.goto();
+        await use(userSettingsPage);
+    },
+
+    currentUser: async ({}, use) => {
+        const userData = readJsonFile<UserCredentials>('.auth/user-info.json');
+        await use(userData);
+  }, 
 
 })
 

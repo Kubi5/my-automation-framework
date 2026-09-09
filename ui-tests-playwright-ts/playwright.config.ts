@@ -10,12 +10,10 @@ export default defineConfig({
   use: {
     headless: true,
     screenshot: 'only-on-failure',
-    trace: 'retain-on-failure',
+    trace: 'on',
   },
 
   
-
-  /* Configure projects for major browsers */
   projects: [
     {
       name: 'setup',

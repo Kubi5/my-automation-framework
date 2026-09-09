@@ -14,11 +14,11 @@ export class NavbarComponent {
         this.page = page;
         this.navbar = page.locator('.navbar-nav');
 
-        this.signInButton = page.locator('a[href="/login"]');
-        this.signUpButton = page.locator('a[href="/register"]');
+        this.signInButton = page.getByRole('link', { name : "Sign in"});
+        this.signUpButton = page.getByRole('link', { name : "Sign up"});
 
         this.userNameLink = this.navbar.locator('a[href^="/profile/"]');
-        this.newArticleButton = page.locator('a[href="/editor"]');
+        this.newArticleButton = page.getByRole('link', { name : "New Article"});
     }
 
     async goToLoginPage(){

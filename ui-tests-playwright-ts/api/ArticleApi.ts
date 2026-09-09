@@ -1,11 +1,9 @@
 import { APIRequestContext } from '@playwright/test';
 import { generateRandomArticleData } from '../utils/ArticleUtils';
-import { getAuthToken } from '../utils/AccountUtils';
 
 
-export async function createArticle(request: APIRequestContext): Promise<string> {
+export async function createArticle(request: APIRequestContext, token: string): Promise<string> {
     const articleData = await generateRandomArticleData();
-    const token = await getAuthToken();
 
     const response = await request.post('https://api.realworld.show/api/articles', {
         headers: {

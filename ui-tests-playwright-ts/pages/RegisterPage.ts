@@ -10,10 +10,10 @@ export class RegisterPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.usernameInput = page.locator('input[name="username"]');
-    this.emailInput = page.locator('input[name="email"]');
-    this.passwordInput = page.locator('input[name="password"]');
-    this.confirmButton = page.locator('button[type="submit"]');
+    this.usernameInput = page.getByRole("textbox", { name : "username"});
+    this.emailInput = page.getByRole("textbox", { name : "email"});
+    this.passwordInput = page.getByRole("textbox", { name : "password"});
+    this.confirmButton = page.getByRole("button", { name : "Sign up"});
   }
 
   async goto() {

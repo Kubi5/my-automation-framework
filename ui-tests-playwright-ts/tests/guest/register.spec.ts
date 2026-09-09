@@ -4,11 +4,15 @@ import { generateRandomUserData } from '../../utils/AccountUtils';
 
 test.describe('Conduit - Register Tests', () => {
 
-  test('should navigate properly from main view to register page', async ({ registerPage, navbarComponent, mainView }) => {
+  test.beforeEach(async ({ registerPage }) => {
+    await registerPage.goto();
+  });
+
+  test('should navigate properly from main view to register page', async ({ navbarComponent, mainView }) => {
     await mainView.goto();
     await navbarComponent.goToRegisterPage();
 
-    await expect(registerPage.page).toHaveURL('https://demo.realworld.show/register');
+    await expect(mainView.page).toHaveURL('https://demo.realworld.show/register');
   }); 
 
   test('should register successfully with valid credentials', async ({ registerPage }) => {

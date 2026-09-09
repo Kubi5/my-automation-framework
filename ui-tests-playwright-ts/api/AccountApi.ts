@@ -9,7 +9,7 @@ export async function apiRegisterUser(request: APIRequestContext): Promise<UserC
       user: { 
         username: userCredentials.username,
         email: userCredentials.userEmail,
-        password: userCredentials.userPassword
+        password: userCredentials.userPassword,
       }
     }
   });
@@ -17,6 +17,9 @@ export async function apiRegisterUser(request: APIRequestContext): Promise<UserC
   if (!response.ok()) {
     throw new Error(`Failed to register user via API: ${response.status()}`);
   }
+
+  const body = await response.json();
+  userCredentials.token = body.user.token;
 
   return userCredentials;
 }
